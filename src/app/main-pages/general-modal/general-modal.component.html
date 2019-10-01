@@ -1,0 +1,338 @@
+<!-- <nb-card [nbSpinner]="loading">
+
+
+    <nb-card-header>
+        Order Details
+    </nb-card-header> -->
+
+<!-- <div *ngIf='orderDetails && orderDetails.length>0'>
+
+        <div class="row show-grid">
+            <div><label>{{orderDetails[0].status}}</label></div>
+            <div *ngFor="let item of orderDetails[0].itemizeds" class="col-md-6">
+                <nb-card>
+                    <nb-card-body>
+                        <div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="text" value="{{item.quantity}}" nbInput fullWidth id="quantity" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="salesPrice">Sales Price</label>
+                                <input type="text" value="{{item.salesPrice}}" nbInput fullWidth id="salesPrice"
+                                    disabled>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div> -->
+
+<div class="modal-header">
+  <span> Food Handler Profile Details : <i>{{ dataId }} </i></span>
+  <button class="close" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+    <nb-card [nbSpinner]="loading && !profileDetails" *ngIf="loading && !profileDetails">
+           <nb-card-body>
+
+           </nb-card-body>
+      </nb-card>
+  <!-- <nb-card [nbSpinner]="loading"> -->
+  <ng-container *ngIf="userData==='lab_operator'">
+
+    <form [formGroup]="testForm" class="step-container">
+      <div class="row show-grid">
+        <div formArrayName="items" *ngFor="let item of testForm.get('items').controls; let i = index;"
+          class="col-md-6 item-plus-buttons">
+          <div>
+            <nb-card [nbSpinner]="loading">
+              <nb-card-body>
+                <label class="test-label">
+                  <h5>Complete Test Entry</h5>
+                </label>
+                <ng-container [formGroupName]="i">
+                  <div class="select-group">
+                    <select style="width: 100%" formControlName="testName" class="select-css" id="testName"
+                      placeholder="Test Name">
+                      <option *ngFor="let s of testTypesList;" [value]="s.testName">
+                        {{s.testName}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="select-group">
+                    <select style="width: 100%" formControlName="testResult" class="select-css" id="testResultId"
+                      placeholder="Test Result">
+                      <option *ngFor="let s of testResults;" [value]="s.title">
+                        {{s.title}}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="input-group">
+                    <textarea nbInput fullWidth placeholder="Notes" formControlName="testNote"></textarea>
+                  </div>
+                </ng-container>
+              </nb-card-body>
+            </nb-card>
+          </div>
+          <div class="item-plus-buttons">
+            <button (click)="addItem()" type="button" class="btn btn-primary btn-icon">
+              <i class="nb-plus"></i>
+            </button>
+          </div>
+          <div class="item-plus-buttons" *ngIf="i!=0">
+            <button (click)="removeItem(i)" type="button" class="btn btn-danger btn-icon">
+              <i class="nb-close"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <nb-checkbox formControlName="isConfirmed" (checkedChange)="toggle($event)">
+        <font style="color: crimson"><b>By Checking You Confirm You Have Correctly Entered The Approved Food Handlers
+            Test Result(s) and Approved Payment</b></font>
+      </nb-checkbox>
+
+      <div style="text-align: right" class="submit-buttons">
+        <button [disabled]="testForm.invalid" (click)="onSecondSubmit()" nbButton shape="rectangle" status="success"
+          class="btn-demo">Submit Test Result(s)
+        </button>
+      </div>
+
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="profileDetails && userData==='administrator'">
+
+    <div class="col-md-12">
+        <ng-container *ngIf="profileConfirmed">
+        <nb-card >
+            <nb-card-header>Print Food Handler ID Card</nb-card-header>
+            <nb-card-body>
+                <div class="id-card-tag"></div>
+                <div class="id-card-tag-strip"></div>
+                <div class="id-card-hook"></div>
+                <div id="id-card-holder" class="id-card-holder">
+                  <div id="id-card" class="id-card">
+                        <div style="display: flex;
+                        flex-direction: column;
+                        justify-content: center;text-align: center"><img style="width:200px;margin: 0 auto" src="assets/images/fed-min-logo.jpg"/>
+                        </div>
+                    <div class="header">
+                      FCT Food Handler ID Card
+                      </div>
+                    <div class="photo">
+                      <img [src]="profileDetails.mainData.imagePath">
+                    </div>
+                    <h3>{{profileDetails.mainData.firstName}} {{profileDetails.mainData.lastName}}</h3>
+                    <div class="qr-code">
+                      <img src="assets/images/qr-code.png">
+                    </div>
+                    <h5>{{profileDetails.mainData.uniqueId}}</h5>
+                    <hr>
+                    <p><strong><font style="font-size: 0.7rem">Expiry Date: {{profileDetails.mainData.expiryDate | date:'longDate' }}</font></strong><p>
+                    <p><font style="font-size: 0.7rem">Address....</font></p>
+                    <p><font style="font-size: 0.7rem">Ph: 080845080545 | E-mail: info@fctfoodhandlers.com</font></p>
+              
+                  </div>
+                </div>
+            </nb-card-body>
+            <nb-card-footer><button (click)="print()" nbButton shape="rectangle" status="primary" class="btn-demo button-pad">Print ID Card</button></nb-card-footer>
+        </nb-card>
+      </ng-container>
+      <nb-card class="inline-form-card">
+        <nb-card-header>Profile Details</nb-card-header>
+        <nb-card-body>
+          <form [formGroup]="firstForm" class="form-inline">
+            <label for="presentStatus">Present Status: </label>
+            <input style="font-weight: bold" type="text" value="**{{profileDetails.mainData.status}}**" nbInput
+              class="form-control full-width" id="presentStatus" disabled>
+<!-- 
+            <div *ngIf="userData==='administrator'" class="form-group">
+              <select formControlName="status" class="select-css" id="status">
+                <option *ngFor="let status of statuses;" [value]="status.title">
+                  {{status.title}}
+                </option>
+              </select>
+            </div> -->
+            <ng-container *ngIf="userData==='administrator' && profileDetails.mainData.status === 'Screened' ">
+            <nb-checkbox formControlName="checkedProofTrue" (checkedChange)="toggleProof($event)">
+                <font style="color: crimson"><b>Approve this Food Handler Profile as Confirmed to Have Completed All Necessary Requirements!</b></font>
+              </nb-checkbox>
+
+            <div  class="submit-button">
+              <button [disabled]="firstForm.invalid" (click)="updateStatus()" type="submit"
+                class="btn btn-primary">Update Status To Confirmed</button> 
+            </div>
+          </ng-container>
+          </form>
+          <div class="row full-name-inputs">
+            <div class="col-sm-6 input-group">
+              <label>Created Date</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.created_at | date:'mediumDate'}}" disabled>
+            </div>
+            <div class="col-sm-6 input-group">
+              <label>Sex</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.sex}}" disabled>
+            </div>
+          </div>
+          <div class="row full-name-inputs">
+            <div class="col-sm-6 input-group">
+              <label>First Name</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.firstName}}" disabled>
+            </div>
+            <div class="col-sm-6 input-group">
+              <label>Last Name</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.lastName}}" disabled>
+            </div>
+          </div>
+          <div class="row full-name-inputs">
+            <div class="col-sm-6 input-group">
+              <label>State</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.stateOrigin}}" disabled>
+            </div>
+            <div class="col-sm-6 input-group">
+              <label>LGA</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.lga}}" disabled>
+            </div>
+          </div>
+          <div class="row full-name-inputs">
+            <div class="col-sm-6 input-group">
+              <label>Telephone</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.telephone}}" disabled>
+            </div>
+            <div class="col-sm-6 input-group">
+              <label>Date of Birth</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.dob | date:'mediumDate'}}" disabled>
+            </div>
+          </div>
+          <div class="input-group">
+              <label>Address</label>
+              <input nbInput fullWidth value="{{profileDetails.mainData.address}}" disabled>
+          </div>
+          <div class="row full-name-inputs">
+              <div class="col-sm-6 input-group">
+                <label>Employer</label>
+                <input nbInput fullWidth value="{{profileDetails.mainData.employer.empName}}" disabled>
+              </div>
+              <div class="col-sm-6 input-group">
+                <label>Expiry Date</label>
+                <input nbInput fullWidth value="{{profileDetails.mainData.expiryDate | date:'longDate'}}" disabled>
+              </div>
+          </div>
+        </nb-card-body>
+
+        <nb-card *ngIf="profileDetails.mainData.labtests.length>0">
+          <nb-card-header>Lab Test Results <font style="font-size: 0.8rem">(Date
+              entered:{{profileDetails.mainData.labtests[0].updated_at | date:'fullDate'}})</font>
+          </nb-card-header>
+          <nb-card-body>
+            <div class="row show-grid">
+              <div *ngFor="let item of profileDetails.mainData.labtests" class="col-md-6">
+                <nb-card>
+                  <nb-card-body>
+                    <div>
+                      <div class="form-group">
+                        <label for="testName">Test Name</label>
+                        <input type="text" value="{{item.testName}}" nbInput fullWidth id="testName" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="testResult">Result</label>
+                        <input type="text" value="{{item.testResult}}" nbInput fullWidth id="testResult" disabled>
+                      </div>
+                      <div class="form-group">
+                        <label for="testNote">Notes</label>
+                        <textarea type="text" value="{{item.testNote}}" nbInput fullWidth id="testNote"
+                          disabled></textarea>
+                      </div>
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </nb-card-body>
+        </nb-card>
+
+      </nb-card>
+    </div>
+  </ng-container>
+
+  <!-- <ng-container *ngIf="orderDetails">
+
+        <ng-container *ngIf="orderDetails.itemData && orderDetails.itemData[0]!=undefined">
+
+                <div class="col-md-12">
+                        <nb-card class="inline-form-card">
+                            <nb-card-header>Order Status</nb-card-header>
+                            <nb-card-body>
+                                <form [formGroup]="firstForm" class="form-inline">
+                                    <label for="presentStatus">Present Status: </label>
+                                    <input type="text" value="**{{orderDetails.otherData.status}}**" nbInput
+                                        class="form-control full-width" id="presentStatus" disabled>
+
+                                                <div *ngIf="userData==='administrator'" class="form-group">
+                                                <select formControlName="status" class="select-css" id="status">
+                                                        <option *ngFor="let status of statuses;" [value]="status.name">
+                                                          {{status.title}}
+                                                        </option>
+                                                      </select>
+                                                    </div>
+
+                                                      <div *ngIf="userData==='administrator'" class="submit-button">
+                                    <button [disabled]="firstForm.invalid" (click)="updateStatus()" type="submit" class="btn btn-primary">Update</button> </div>
+                                </form>
+                            </nb-card-body>
+                        </nb-card>
+                    </div>
+        <nb-card>
+            <nb-card-header>Order Items</nb-card-header>
+            <nb-card-body>
+                    <div class="row show-grid">
+                <div *ngFor="let item of orderDetails.itemData" class="col-md-6">
+                    <nb-card>
+                        <nb-card-body>
+                            <div>
+                                    <div class="form-group">
+                                            <label for="name">Product Name</label>
+                                            <input type="text" value="{{item.productName}}" nbInput fullWidth id="name"
+                                                disabled>
+                                        </div>
+                                <div class="form-group">
+                                    <label for="quantity">Quantity</label>
+                                    <input type="text" value="{{item.item.quantity}}" nbInput fullWidth id="quantity"
+                                        disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label for="salesPrice">Sales Price</label>
+                                    <input type="text" value="&#8358;{{item.item.salesPrice}}" nbInput fullWidth id="salesPrice"
+                                        disabled>
+                                </div>
+                            </div>
+                        </nb-card-body>
+                    </nb-card>
+                </div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+
+
+
+    </ng-container>
+
+</ng-container> -->
+
+  <!-- </nb-card> -->
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-md btn-primary" (click)="closeModal()">Close</button>
+</div>
+<!-- 
+        <div class="modal-footer">
+            <button class="btn btn-md btn-primary" (click)="closeModal()">Save changes</button>
+        </div> -->
+<!-- 
+    </div>
+</nb-card> -->

@@ -1,0 +1,35 @@
+<nb-card>
+
+
+    <nb-card-header class="main-header">
+        <div class="buttons-div">
+            <a href="/#/main-pages/create-employer"  shape="semi-round" status="success" class="btn-demo button-pad" nbButton>Create Employer</a>
+          <button (click)="refresh()" nbButton shape="semi-round" status="primary" class="btn-demo button-pad">Refresh</button>
+      </div>
+    List of Employers
+  </nb-card-header>
+
+  <nb-card-body>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover mouse-over">
+          <thead>
+        <tr>
+          <th>Employer Id</th>
+          <th>Employer Name</th>
+          <th>Address</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="employers?.length != 0">
+          <tr *ngFor="let employer of employers">
+              <td>{{ employer.empUniqueId }}</td>
+              <td>{{ employer.empName }}</td>
+              <td>{{ employer.empAddress }}</td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="employers?.length == 0">
+        <tr>
+          <td colspan="3" class="no-data-available">No data!</td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>

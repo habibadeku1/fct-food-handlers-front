@@ -1,0 +1,11 @@
+<div class="summary-container">
+        <div class="summary" *ngFor="let item of summary">
+          <div class="title">{{ item.title }}</div>
+          <ng-container *ngIf="item.title==='Amount Received'">
+          <div class="value">{{ item.value | currency:'NGN' }}</div>
+          </ng-container>
+          <ng-container *ngIf="item.title!='Amount Received'">
+          <div class="value">{{ item.value }}</div>
+          </ng-container>
+        </div>
+      </div>

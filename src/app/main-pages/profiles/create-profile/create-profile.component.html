@@ -1,0 +1,232 @@
+<nb-card [nbSpinner]="loading">
+
+
+  <nb-card-header>
+    Create A New Food Handler Profile
+  </nb-card-header>
+
+  <nb-card-body>
+    <nb-stepper #stepper [disableStepNavigation]="true" *ngIf="employersList&&employersList.length>0&&testTypesList&&testTypesList.length>0" orientation="horizontal">
+
+      <nb-step label="Profile">
+        <form [formGroup]="profileForm" class="step-container">
+
+          <nb-card>
+            <nb-card-body>
+              <div class="row full-name-inputs">
+                <div class="col-sm-6 input-group">
+                  <input nbInput fullWidth formControlName="firstName" placeholder="First Name">
+                </div>
+                <div class="col-sm-6 input-group">
+                  <input nbInput fullWidth formControlName="lastName" placeholder="Last Name">
+                </div>
+              </div>
+              <div class="row full-name-inputs">
+                <div class="col-sm-6 input-group">
+                  <input nbInput fullWidth formControlName="dob" placeholder="Date of Birth" [nbDatepicker]="datepicker">
+                  <nb-datepicker [max]="max" #datepicker></nb-datepicker>
+                </div>
+                <div class="col-sm-6 select-group">
+                    <nb-select style="width: 100%" shape="rectangle" formControlName="sex" id="sex" placeholder="Sex">
+                      <nb-option *ngFor="let s of sex; let i = index" [value]="s.title">
+                        {{s.title}}
+                      </nb-option>
+                    </nb-select>
+                </div>
+              </div>
+              <div class="row full-name-inputs">
+                <div class="col-sm-6 select-group">
+                      <!-- <nb-select [selected]="checkSelected()" style="width: 100%" shape="rectangle" formControlName="stateOrigin" id="stateOrigin" placeholder="State Of Origin">
+                        <nb-option *ngFor="let s of statesAndLgas; let i = index" [value]="s.state.name">
+                          {{s.state.name}}
+                        </nb-option>
+                      </nb-select> -->
+                      <nb-select style="width: 100%" shape="rectangle" formControlName="stateOrigin" id="stateOrigin" placeholder="State Of Origin" #stateSelector>
+                          <nb-option *ngFor="let s of statesAndLgas; let i = index" [value]="s.state.name">
+                            {{s.state.name}}
+                          </nb-option>
+                      </nb-select>
+                </div>
+                <div class="col-sm-6 select-group">
+                    <nb-select style="width: 100%" shape="rectangle" formControlName="lga" id="lga" placeholder="LGA" #lgaSelector>
+                      <nb-option *ngFor="let s of lgaOptions; let i = index" [value]="s.name">
+                        {{s.name}}
+                      </nb-option>
+                    </nb-select>
+              </div>
+              </div>
+              <div class="input-group">
+                <input type="text" nbInput fullWidth formControlName="address" placeholder="Address">
+              </div>
+              <div class="row full-name-inputs">
+                <div class="col-sm-6 input-group">
+                  <input type="tel" nbInput fullWidth formControlName="telephone" placeholder="Telephone">
+                </div>
+                <!-- <div class="col-sm-6 input-group">
+                  <input nbInput fullWidth formControlName="employer" placeholder="Employer">
+                </div> -->
+                <div class="col-sm-6 select-group">
+                    <nb-select style="width: 100%" shape="rectangle" formControlName="employer" id="employer" placeholder="Employer" >
+                      <nb-option *ngFor="let s of employersList; let i = index" [value]="s">
+                        {{s.empName}}
+                      </nb-option>
+                    </nb-select>
+              </div>
+              </div>
+              <!-- <div class="row full-name-inputs">
+                <div class="col-sm-6 select-group">
+                      <nb-select style="width: 100%" shape="rectangle" formControlName="paymentType" id="paymentType" placeholder="Payment Type" >
+                        <nb-option *ngFor="let s of paymentTypes; let i = index" [value]="s.title">
+                          {{s.title}}
+                        </nb-option>
+                      </nb-select>
+                </div>
+                <div class="col-sm-6 input-group">
+                  <input nbInput fullWidth formControlName="paymentReference" placeholder="Payment Reference No.">
+                </div>
+              </div> -->
+              <div class="input-group">
+                  <label class="image-upload-container btn btn-bwm">
+                      <span>Select Image</span>
+                      <input #imageInput
+                             type="file"
+                             accept="image/*"
+                             (change)="processFile(imageInput)">
+                    </label>
+                    
+                    
+                    <div *ngIf="selectedFile" class="img-preview-container">
+                    
+                      <div class="img-preview{{selectedFile.status === 'fail' ? '-error' : ''}}"
+                           [ngStyle]="{'background-image': 'url('+ selectedFile.src + ')'}">
+                      </div>
+                    
+                      <div *ngIf="selectedFile.pending" class="img-loading-overlay">
+                        <div class="img-spinning-circle"></div>
+                      </div>
+                    
+                      <div *ngIf="selectedFile.status === 'ok'" class="alert alert-success"> Image Uploaded Succesfuly!</div>
+                      <div *ngIf="selectedFile.status === 'fail'" class="alert alert-danger"> Image Upload Failed!</div>
+                    </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+
+          <div class="submit-buttons">
+            <button [disabled]="profileForm.invalid" (click)="onProfileSubmit()" nbButton shape="rectangle"
+              status="success" class="btn-demo" nbStepperNext>
+              Submit
+            </button>
+          </div>
+
+
+        </form>
+
+      </nb-step>
+
+<!-- 
+      <nb-step label="Test(s)">
+        <form [formGroup]="testForm" class="step-container">
+          <div class="row show-grid">
+            <div formArrayName="items" *ngFor="let item of testForm.get('items').controls; let i = index;"
+              class="col-md-6 item-plus-buttons">
+              <div>
+                <nb-card>
+                  <nb-card-body>
+                    <label class="test-label">
+                      <h5>Complete Test Entry</h5>
+                    </label>
+                    <ng-container [formGroupName]="i">
+                      <div class="select-group">
+                          <nb-select style="width: 100%" shape="rectangle" formControlName="testName" id="testNameId" placeholder="Test Name" >
+                            <nb-option *ngFor="let s of testTypesList; let i = index" [value]="s">
+                              {{s.testName}}
+                            </nb-option>
+                          </nb-select>
+                      </div>
+                      <div class="select-group">
+                          <nb-select style="width: 100%" shape="rectangle" formControlName="testResult" id="testResultId" placeholder="Test Result" >
+                            <nb-option *ngFor="let s of testResults; let i = index" [value]="s">
+                              {{s.title}}
+                            </nb-option>
+                          </nb-select>
+                      </div>
+                      <div class="input-group">
+                        <textarea nbInput fullWidth placeholder="Notes" formControlName="testNote"></textarea>
+                      </div>
+                    </ng-container>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+              <div class="item-plus-buttons">
+                <button (click)="addItem()" type="button" class="btn btn-primary btn-icon">
+                  <i class="nb-plus"></i>
+                </button>
+              </div>
+              <div class="item-plus-buttons" *ngIf="i!=0">
+                <button (click)="removeItem(i)" type="button" class="btn btn-danger btn-icon">
+                  <i class="nb-close"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="submit-buttons">
+              <button (click)="onSecondSubmit()" nbButton shape="rectangle" status="success"
+                class="btn-demo" nbStepperNext>Complete Profile Entry
+            </button>
+          </div>
+
+
+        </form>
+
+      </nb-step> -->
+
+      <nb-step [completed]="profileSucceed" [hidden]="true" label="Profile Success">
+        <div class="complete-text">
+            <h4>This Food Handler Profile was successfully entered and the status set to "Pending"!</h4>
+<!-- 
+          <h4>This profile entry was successfully completed for Food Handler ID: <b>{{profileUniqueId}}</b></h4> -->
+        </div>
+        <!-- <ng-container *ngIf="profileSucceed">
+        <nb-card >
+            <nb-card-header>Print Food Handler ID Card</nb-card-header>
+            <nb-card-body>
+                <div class="id-card-tag"></div>
+                <div class="id-card-tag-strip"></div>
+                <div class="id-card-hook"></div>
+                <div id="id-card-holder" class="id-card-holder">
+                  <div id="id-card" class="id-card">
+                    <div class="header">
+                      FCT Food Handler
+                      </div>
+                    <div class="photo">
+                      <img [src]="profileDetails.imagePath">
+                    </div>
+                    <h2>{{profileDetails.firstName}} {{profileDetails.lastName}}</h2>
+                    <div class="qr-code">
+                      <img src="https://www.shopify.com/growth-tools-assets/qr-code/shopify-faae7065b7b351d28495b345ed76096c03de28bac346deb1e85db632862fd0e4.png">
+                    </div>
+                    <h3>{{profileDetails.uniqueId}}</h3>
+                    <hr>
+                    <p><strong>Expiry Date: {{profileDetails.expiryDate | date:'longDate' }}</strong><p>
+                    <p>Address<strong>....</strong></p>
+                    <p>Ph: 080845080545 | E-mail: info@fctfoodhandlers.com</p>
+              
+                  </div>
+                </div>
+            </nb-card-body>
+            <nb-card-footer><button (click)="print()" nbButton shape="rectangle" status="primary" class="btn-demo button-pad">Print ID Card</button></nb-card-footer>
+        </nb-card>
+      </ng-container> -->
+        <div class="complete-button">
+          <button (click)="resetForm()" nbButton shape="rectangle" status="success" class="btn-demo button-pad">Create
+            Another Profile</button>
+
+        </div>
+      </nb-step>
+
+    </nb-stepper>
+  </nb-card-body>
+
+
+</nb-card>

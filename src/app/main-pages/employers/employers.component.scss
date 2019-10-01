@@ -1,0 +1,44 @@
+@import '../../@theme/styles/themes';
+@import '~@nebular/bootstrap/styles/buttons';
+@import '~bootstrap/scss/mixins/breakpoints';
+@import '~@nebular/theme/styles/global/breakpoints';
+
+@include nb-install-component() {
+
+  // .button-container {
+  //   margin: 1.25rem 0 0 1.25rem;
+  //   text-align: right;
+  // }
+
+  .no-data-available {
+    text-align: center;
+  }
+  
+  /*
+     src/styles.css (i.e. your global style)
+  */
+  .dataTables_empty {
+    display: none;
+  }
+  
+  .mouse-over tr {
+    cursor: pointer;
+  }
+
+.main-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-div {
+  text-align: right;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.button-pad {
+  margin: 0.3rem
+}
+
+}

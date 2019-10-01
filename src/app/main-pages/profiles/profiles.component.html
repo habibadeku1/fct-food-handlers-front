@@ -1,0 +1,87 @@
+<nb-card [nbSpinner]="loading">
+ 
+
+  <nb-card-header class="main-header">
+      <div  class="buttons-div">
+          <a *ngIf="userData==='field_operator'" href="/#/main-pages/create-profile"  shape="rectangle" status="success" class="btn-demo button-pad" nbButton>Create Profile</a>
+
+        <button (click)="refresh()" nbButton shape="rectangle" status="primary" class="btn-demo button-pad">Refresh</button>
+        <button *ngIf="userData==='administrator'" (click)="captureScreen()" nbButton shape="rectangle" status="success" class="btn-demo button-pad">Download PDF</button>
+    </div>
+    List of Registered Food Handlers Profile 
+  </nb-card-header>
+
+  <nb-card-body id="contentToConvert">
+      <div style="display: flex;
+      flex-direction: column;
+      justify-content: center;text-align: center"><img style="width:200px;margin: 0 auto" src="assets/images/fed-min-logo.jpg"/>
+        </div>
+    <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover mouse-over">
+      <thead>
+          <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Sex</th>
+          <th>Lab</th>
+          <th>Employer</th>
+          <th>Expiration Date</th>
+          <th>Status</th>
+          <th>Tests/Results</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="profiles?.length != 0">
+          <tr *ngFor="let profile of profiles">
+              <td style="padding: 0.8rem" >{{ profile.id }}</td>
+              <td style="padding: 0.8rem" >{{ profile.firstName }}</td>
+              <td style="padding: 0.8rem" >{{ profile.lastName }}</td>
+              <td style="padding: 0.8rem" >{{ profile.sex }}</td>
+              <td style="padding: 0.8rem" *ngIf="profile.labtests[0] && profile.labtests[0].tester" >{{ profile.labtests[0].tester.username }}</td>
+              <td style="padding: 0.8rem" *ngIf="!profile.labtests[0] || !profile.labtests[0].tester" >**</td>
+              <td style="padding: 0.8rem" >{{ profile.employer }}</td>
+              <td style="padding: 0.8rem" >{{ profile.expiryDate | date:'longDate' }}</td>
+              <td *ngIf="profile.status==='Pending'" style="padding: 0.8rem;color: orange;font-weight: bold; background-color: cornsilk" >{{ profile.status }}</td>
+              <td *ngIf="profile.status==='Screened'" style="padding: 0.8rem;color:blue;font-weight: bold; background-color: cornsilk" >{{ profile.status }}</td>
+              <td *ngIf="profile.status==='Confirmed'" style="padding: 0.8rem;color:green;font-weight: bold; background-color: cornsilk" >{{ profile.status }}</td>
+              <td *ngIf="profile.status==='Expired'" style="padding: 0.8rem;color: red;font-weight: bold; background-color: cornsilk" >{{ profile.status }}</td>
+              <td><ng-container *ngFor="let item of profile.labtests">{{item.testName}}: {{item.testResult}}, </ng-container> </td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="profiles?.length == 0">
+        <tr>
+          <td colspan="3" class="no-data-available">No data!</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- <table style="display: none" id="contentToConvert" datatable [dtTrigger]="dtTrigger" class="row-border hover mouse-over">
+      <thead>
+        <tr >
+          <th>ID</th>
+          <th>Name</th>
+          <th>Sex</th>
+          <th>Employer</th>
+          <th>Expiration Date</th>
+          <th>Status</th>
+          <th>Tests/Results</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="profiles?.length != 0">
+          <tr *ngFor="let profile of profiles">
+              <td style="padding: 0.8rem" >{{ profile.id }}</td>
+              <td style="padding: 0.8rem" >{{ profile.firstName }} {{ profile.lastName }}</td>
+              <td style="padding: 0.8rem" >{{ profile.sex }}</td>
+              <td style="padding: 0.8rem" >{{ profile.employer }}</td>
+              <td style="padding: 0.8rem" >{{ profile.expiryDate | date:'longDate' }}</td>
+              <td style="padding: 0.8rem;" >{{ profile.status }}</td>
+              <td><ng-container *ngFor="let item of profile.labtests">{{item.testName}} : {{item.testResult}}, </ng-container> </td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="profiles?.length == 0">
+        <tr>
+          <td colspan="3" class="no-data-available">No data!</td>
+        </tr>
+      </tbody>
+    </table> -->
+  </nb-card-body>
+</nb-card>

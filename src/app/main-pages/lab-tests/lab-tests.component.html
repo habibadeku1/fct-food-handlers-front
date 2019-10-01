@@ -1,0 +1,17 @@
+<nb-card size="medium">
+
+
+    <nb-card-header class="main-header">
+        <!-- <div class="buttons-div">
+            <a href="/#/main-pages/create-employer"  shape="semi-round" status="success" class="btn-demo button-pad" nbButton>Create Employer</a>
+          <button (click)="refresh()" nbButton shape="semi-round" status="primary" class="btn-demo button-pad">Refresh</button>
+      </div> -->
+    List of Approved Lab Tests
+  </nb-card-header>
+
+  <nb-list>
+      <nb-list-item *ngFor="let s of labTests">
+        {{ s.testName }}
+      </nb-list-item>
+    </nb-list>
+</nb-card>

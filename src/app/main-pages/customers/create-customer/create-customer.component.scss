@@ -1,0 +1,72 @@
+@import "../../../@theme/styles/themes";
+@import "~@nebular/bootstrap/styles/buttons";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~@nebular/theme/styles/global/breakpoints";
+
+@include nb-install-component() {
+  /deep/ nb-tabset .step-content {
+    text-align: center;
+    button {
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+  }
+
+  .form-control {
+    padding-left: 3rem;
+  }
+
+  .form-group label {
+    //  padding: 0 0 0.75rem;
+    text-align: left !important;
+    float: left;
+  }
+
+  .product-label {
+    padding: 0.75rem;
+  }
+
+  .item-plus-buttons {
+    padding: 0.3rem;
+    button {
+      min-width: 4rem;
+    }
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  nb-select {
+  //  margin-left: -0.35rem;
+    margin-bottom: 1rem;
+  //  padding-right: 0.6rem;
+  }
+
+  .date-input {
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .select-label {
+    text-align: left;
+  }
+
+  .submit-buttons {
+    text-align: right;
+    padding: 0.5rem;
+    button {
+      margin-left: 0.5rem;
+    }  
+  }
+
+  .complete-button {
+    text-align: right;
+    padding: 0.5rem;  
+  }
+
+  .complete-text {
+    text-align: center;
+    padding: 3rem;
+  }
+}

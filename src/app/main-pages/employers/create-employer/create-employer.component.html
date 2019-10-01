@@ -1,0 +1,32 @@
+<nb-card [nbSpinner]="loading">
+
+
+  <nb-card-header>
+    Add A New Employer 
+  </nb-card-header>
+
+    <nb-card-body>
+
+        <form [formGroup]="firstForm" class="step-container">
+            <nb-card class="col-md-6 offset-md-3">
+              <nb-card-body>
+                  <!-- <div class="input-group">
+                      <input nbInput fullWidth formControlName="productRefId" placeholder="Employer Reference Id">
+                  </div> -->
+                  <div class="input-group">
+                      <input nbInput fullWidth formControlName="empName" placeholder="Employer Name">
+                  </div>
+                  <div class="input-group">
+                      <input nbInput fullWidth formControlName="empAddress" placeholder="Employer Address">
+                  </div>
+              </nb-card-body>
+            </nb-card>
+            <div class="submit-buttons">
+            <button [disabled]="firstForm.invalid" (click)="onFirstSubmit()" nbButton shape="semi-round" status="success" class="btn-demo" >Add Employer</button>
+          </div>
+        </form>
+
+    </nb-card-body>
+
+
+  </nb-card>

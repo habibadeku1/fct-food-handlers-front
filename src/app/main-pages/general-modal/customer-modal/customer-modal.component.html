@@ -1,0 +1,127 @@
+<!-- <nb-card [nbSpinner]="loading">
+
+
+    <nb-card-header>
+        Order Details
+    </nb-card-header> -->
+
+<!-- <div *ngIf='orderDetails && orderDetails.length>0'>
+
+        <div class="row show-grid">
+            <div><label>{{orderDetails[0].status}}</label></div>
+            <div *ngFor="let item of orderDetails[0].itemizeds" class="col-md-6">
+                <nb-card>
+                    <nb-card-body>
+                        <div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="text" value="{{item.quantity}}" nbInput fullWidth id="quantity" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="salesPrice">Sales Price</label>
+                                <input type="text" value="{{item.salesPrice}}" nbInput fullWidth id="salesPrice"
+                                    disabled>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div> -->
+
+<div class="modal-header">
+    <span> Customer Details </span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+        <nb-card [nbSpinner]="loading">
+
+
+                <nb-card-header>
+                  Update/Delete A Customer
+                </nb-card-header>
+              
+                  <nb-card-body *ngIf="checkResponse">
+              
+                      <form [formGroup]="firstForm" class="step-container">
+                            <nb-card class="col-md-8 offset-md-2">
+                                    <nb-card-body>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="text" formControlName="username" nbInput fullWidth id="inputUsername"
+                                              placeholder="Username">
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="email" formControlName="email" nbInput fullWidth id="inputEmail" placeholder="Email">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="text" formControlName="firstName" nbInput fullWidth id="inputFirstName"
+                                              placeholder="Contact First Name">
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="text" formControlName="lastName" nbInput fullWidth id="inputLastName"
+                                              placeholder="Contact Last Name">
+                                          </div>
+                                        </div>
+                                      </div>
+                            
+                                      <div class="row">
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="text"  id="businessName"
+                                            nbInput fullWidth formControlName="businessName" placeholder="Business Name">
+                                          </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                          <div class="form-group">
+                                            
+                                            <input type="text" id="telephone"
+                                            nbInput fullWidth formControlName="telephone" placeholder="Telephone" >
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <!-- <div class="input-group">
+                                        <input nbInput fullWidth formControlName="businessName" placeholder="Business Name">
+                                      </div>
+                                      <div class="input-group">
+                                        <input type="tel" nbInput fullWidth formControlName="telephone" placeholder="Telephone">
+                                      </div> -->
+                                    </nb-card-body>
+                                  </nb-card>
+                          <div class="submit-button space-between">
+                          <!-- <button disabled [disabled]="firstForm.invalid" (click)="delete()" nbButton shape="semi-round" status="danger" class="btn-demo" >Delete Customer</button> -->
+    
+                          <button [disabled]="firstForm.invalid" (click)="onFirstSubmit()" nbButton shape="semi-round" status="success" class="btn-demo" >Update</button>
+                        </div>
+                        </form>
+              
+                  </nb-card-body>
+              
+              
+                </nb-card>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="closeModal()">Close</button>
+</div>
+<!-- 
+        <div class="modal-footer">
+            <button class="btn btn-md btn-primary" (click)="closeModal()">Save changes</button>
+        </div> -->
+<!-- 
+    </div>
+</nb-card> -->

@@ -1,0 +1,82 @@
+<!-- <nb-card [nbSpinner]="loading">
+
+
+    <nb-card-header>
+        Order Details
+    </nb-card-header> -->
+
+<!-- <div *ngIf='orderDetails && orderDetails.length>0'>
+
+        <div class="row show-grid">
+            <div><label>{{orderDetails[0].status}}</label></div>
+            <div *ngFor="let item of orderDetails[0].itemizeds" class="col-md-6">
+                <nb-card>
+                    <nb-card-body>
+                        <div>
+                            <div class="form-group">
+                                <label for="quantity">Quantity</label>
+                                <input type="text" value="{{item.quantity}}" nbInput fullWidth id="quantity" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="salesPrice">Sales Price</label>
+                                <input type="text" value="{{item.salesPrice}}" nbInput fullWidth id="salesPrice"
+                                    disabled>
+                            </div>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </div>
+        </div> -->
+
+<div class="modal-header">
+    <span> Employer Details </span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+        <nb-card [nbSpinner]="loading">
+
+
+                <nb-card-header>
+                  Update/Delete An Employer
+                </nb-card-header>
+              
+                  <nb-card-body *ngIf="checkResponse">
+              
+                      <form [formGroup]="firstForm" class="step-container">
+                          <nb-card class="col-md-6 offset-md-3">
+                            <nb-card-body>
+                                <!-- <div class="input-group">
+                                    <input nbInput fullWidth formControlName="productRefId" placeholder="Product Reference Id">
+                                </div> -->
+                                <div class="input-group">
+                                    <input nbInput fullWidth formControlName="empName" placeholder="Employer Name">
+                                </div>
+                                <div class="input-group">
+                                    <input nbInput fullWidth formControlName="empAddress" placeholder="Employer Address">
+                                </div>
+                            </nb-card-body>
+                          </nb-card>
+                          <div class="submit-button space-between">
+                          <!-- <button disabled [disabled]="firstForm.invalid" (click)="delete()" nbButton shape="semi-round" status="danger" class="btn-demo" >Delete Product</button> -->
+    
+                          <button [disabled]="firstForm.invalid" (click)="onFirstSubmit()" nbButton shape="semi-round" status="success" class="btn-demo" >Update</button>
+                        </div>
+                        </form>
+              
+                  </nb-card-body>
+              
+              
+                </nb-card>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="closeModal()">Close</button>
+</div>
+<!-- 
+        <div class="modal-footer">
+            <button class="btn btn-md btn-primary" (click)="closeModal()">Save changes</button>
+        </div> -->
+<!-- 
+    </div>
+</nb-card> -->

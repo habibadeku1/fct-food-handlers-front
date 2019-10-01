@@ -1,0 +1,40 @@
+<nb-card>
+
+
+      <nb-card-header class="main-header">
+          <div class="buttons-div">
+              <a href="/#/main-pages/create-customer"  shape="semi-round" status="success" class="btn-demo button-pad" nbButton>Create Customer</a>
+            <button (click)="refresh()" nbButton shape="semi-round" status="primary" class="btn-demo button-pad">Refresh</button>
+        </div>
+
+    List of Customers
+  </nb-card-header> 
+
+  <nb-card-body>
+      <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover mouse-over">
+          <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Contact Person</th>
+          <th>Business Name</th>
+          <th>Telephone</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="customers?.length != 0">
+          <tr *ngFor="let customer of customers">
+              <td>{{ customer.username }}</td>
+              <td>{{ customer.email }}</td>
+              <td>{{ customer.name }}</td>
+              <td>{{ customer.businessName }}</td>
+              <td>{{ customer.telephone }}</td>
+          </tr>
+      </tbody>
+      <tbody *ngIf="customers?.length == 0">
+        <tr>
+          <td colspan="3" class="no-data-available">No data!</td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>
